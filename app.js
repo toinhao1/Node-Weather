@@ -1,9 +1,13 @@
 const request = require('request');
+const url = require('./keys');
 
-const url =
-  'https://api.darksky.net/forecast/ee02c55043b99f151f1da260c6ad57a2/37.8267,-122.4233';
-
-request({ url: url }, (err, res) => {
-  const data = JSON.parse(res.body);
-  console.log(data.currently);
+request({ url: url, json: true }, (err, res) => {
+  console.log(
+    res.body.daily.data[0].summary +
+      ' It is currently ' +
+      res.body.currently.temperature +
+      ' degress out. There is a ' +
+      res.body.currently.precipProbability +
+      ' percent chance of rain.'
+  );
 });
