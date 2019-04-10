@@ -1,13 +1,21 @@
-const request = require('request');
-const url = require('./keys');
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 
-request({ url: url, json: true }, (err, res) => {
-  console.log(
-    res.body.daily.data[0].summary +
-      ' It is currently ' +
-      res.body.currently.temperature +
-      ' degress out. There is a ' +
-      res.body.currently.precipProbability +
-      ' percent chance of rain.'
-  );
-});
+const address = process.argv[2];
+
+if (!address) {
+  console.log('Enter an address');
+} else {
+  geocode(address, (err, data) => {
+    if (err) {
+      return console.log(err);
+    }
+    forecast(data.latitude, data.longitude, (err, forecastData) => {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(data.location);
+      console.log(forecastData);
+    });
+  });
+}
