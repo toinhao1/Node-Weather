@@ -20,7 +20,7 @@ const forecast = (lat, long, callback) => {
           ' It is currently ' +
           currently.temperature +
           ' degress out. There is a ' +
-          currently.precipProbability +
+          currently.precipProbability * 100 +
           ' percent chance of rain.'
       );
     }
